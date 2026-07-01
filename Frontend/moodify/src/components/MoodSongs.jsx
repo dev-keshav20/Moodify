@@ -7,19 +7,16 @@ const MoodSongs = ({ mood }) => {
   const [songs, setSongs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  
   const audioRef = useRef(null);
 
- 
   useEffect(() => {
     if (!mood) return;
 
     const fetchSongs = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3000/songs?mood=${mood}`
+          `https://moodify-hajl.onrender.com/songs?mood=${mood}`,
         );
-
         const data = await res.json();
 
         setSongs(data.songs || []);
@@ -32,7 +29,6 @@ const MoodSongs = ({ mood }) => {
     fetchSongs();
   }, [mood]);
 
-
   useEffect(() => {
     if (!audioRef.current || !songs.length) return;
 
@@ -40,7 +36,6 @@ const MoodSongs = ({ mood }) => {
     audioRef.current.play().catch(() => {});
   }, [songs, currentIndex]);
 
- 
   useEffect(() => {
     if (!audioRef.current) return;
 
