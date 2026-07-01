@@ -1,0 +1,21 @@
+.footer {
+  height: 7vh;
+  margin-top: -4.5vh;
+  background: rgba(10, 10, 30, 0.4);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: large;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+}
+
+@media (max-width: 1040px) {
+  .footer {
+    margin-top: 0;
+    position: relative;
+    bottom: 0;
+  }
+}
