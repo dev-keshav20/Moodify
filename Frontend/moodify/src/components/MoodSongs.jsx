@@ -4,7 +4,7 @@ import { FaMusic } from "react-icons/fa";
 import Songs from "./Songs";
 
 const MoodSongs = ({ mood }) => {
-  console.log(mood)
+ 
   const [songs, setSongs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -28,7 +28,7 @@ const MoodSongs = ({ mood }) => {
     };
 
     fetchSongs();
-      console.log("Mood Received:", mood);
+
   }, [mood]);
 
   // Change song whenever currentIndex changes

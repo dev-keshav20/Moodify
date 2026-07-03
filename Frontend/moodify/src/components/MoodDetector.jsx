@@ -25,7 +25,7 @@ export default function MoodDetector({ setMood }) {
       setCurrentMood(detectedMood);
 
       setMood(detectedMood);
-      console.log("Detected Mood:", detectedMood);
+  
       
     } else {
       setCurrentMood("Face Not Found");
