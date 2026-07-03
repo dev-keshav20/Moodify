@@ -16,9 +16,7 @@ const MoodSongs = ({ mood }) => {
 
     const fetchSongs = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:3000/songs?mood=${mood}`
-        );
+        const res = await fetch("https://moodify-hajl.onrender.com/songs?mood=" + mood)
 
         const data = await res.json();
 
