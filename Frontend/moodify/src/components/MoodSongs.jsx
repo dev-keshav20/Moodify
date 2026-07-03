@@ -4,19 +4,22 @@ import { FaMusic } from "react-icons/fa";
 import Songs from "./Songs";
 
 const MoodSongs = ({ mood }) => {
+  console.log(mood)
   const [songs, setSongs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const audioRef = useRef(null);
+  const audioRef = useRef(new Audio());
 
+  // Fetch songs according to mood
   useEffect(() => {
     if (!mood) return;
 
     const fetchSongs = async () => {
       try {
         const res = await fetch(
-          `https://moodify-hajl.onrender.com/songs?mood=${mood}`,
+          `http://localhost:3000/songs?mood=${mood}`
         );
+
         const data = await res.json();
 
         setSongs(data.songs || []);
@@ -27,30 +30,45 @@ const MoodSongs = ({ mood }) => {
     };
 
     fetchSongs();
+      console.log("Mood Received:", mood);
   }, [mood]);
 
+  // Change song whenever currentIndex changes
   useEffect(() => {
-    if (!audioRef.current || !songs.length) return;
+    if (!songs.length) return;
 
     audioRef.current.src = songs[currentIndex].audio;
+
     audioRef.current.play().catch(() => {});
   }, [songs, currentIndex]);
 
+  // Auto play next song
   useEffect(() => {
-    if (!audioRef.current) return;
+    const audio = audioRef.current;
 
     const handleEnded = () => {
       if (currentIndex < songs.length - 1) {
         setCurrentIndex((prev) => prev + 1);
+      } else {
+        audio.pause();
+        audio.currentTime = 0;
       }
     };
 
-    audioRef.current.addEventListener("ended", handleEnded);
+    audio.addEventListener("ended", handleEnded);
 
     return () => {
-      audioRef.current?.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("ended", handleEnded);
     };
   }, [currentIndex, songs]);
+
+  // Cleanup when component unmounts
+  useEffect(() => {
+    return () => {
+      audioRef.current.pause();
+      audioRef.current.src = "";
+    };
+  }, []);
 
   return (
     <div className="moodSongs-container">
